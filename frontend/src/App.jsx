@@ -1,24 +1,27 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import AdminRequests from './pages/AdminRequests';
 
 export default function App() {
   return (
-    <Router>
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+    <BrowserRouter>
+      <div className="min-h-screen bg-slate-950 text-slate-100 font-sans">
         <Navbar />
-        <main className="flex-1 p-6">
+        <main className="container mx-auto p-4">
           <Routes>
-            <Route path="/" element={<div className="text-center mt-20 text-slate-400">Bienvenido a CineCraft</div>} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="/admin/requests" element={<AdminRequests />} />
+            <Route path="/" element={<div className="text-center py-20 text-slate-400">Panel Principal (MÓDULOS SIGMAS PENDIENTES)</div>} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
