@@ -190,3 +190,28 @@ exports.updateReview = async (req, res) => {
     res.status(500).json({ message: 'Error al actualizar la reseña.', error: error.message });
   }
 };
+
+exports.deleteReview = async (req, res) => {
+  const { id } = req.params;
+  const usuario_id = req.user.id;
+
+  try {
+    // Verificar que la reseña pertenece al usuario
+    const [reviewCheck] = await pool.query(
+      'SELECT id FROM resena WHERE id = ? AND usuario_id = ?',
+      [id, usuario_id]
+    );
+
+    if (reviewCheck.length === 0) {
+      return res.status(404).json({ message: 'Reseña no encontrada o no tienes permiso para eliminarla.' });
+    }
+
+    // Eliminar
+    await pool.query('DELETE FROM resena WHERE id = ? AND usuario_id = ?', [id, usuario_id]);
+
+    res.status(200).json({ message: 'Reseña eliminada exitosamente.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al eliminar la reseña.', error: error.message });
+  }
+};
