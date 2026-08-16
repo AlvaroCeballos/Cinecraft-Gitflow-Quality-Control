@@ -93,3 +93,37 @@ exports.getMyReviews = async (req, res) => {
     res.status(500).json({ message: 'Error al obtener reseñas.', error: error.message });
   }
 };
+
+exports.getReviewById = async (req, res) => {
+  const { id } = req.params;
+  const usuario_id = req.user.id;
+
+  try {
+    const [review] = await pool.query(
+      `SELECT 
+        r.id, 
+        r.usuario_id, 
+        r.etiqueta_id, 
+        r.titulo_pelicula, 
+        r.calificacion, 
+        r.comentario, 
+        r.destacada, 
+        r.archivada, 
+        r.fecha_creacion,
+        e.nombre AS etiqueta_nombre
+      FROM resena r
+      LEFT JOIN etiqueta e ON r.etiqueta_id = e.id
+      WHERE r.id = ? AND r.usuario_id = ?`,
+      [id, usuario_id]
+    );
+
+    if (review.length === 0) {
+      return res.status(404).json({ message: 'Reseña no encontrada.' });
+    }
+
+    res.status(200).json(review[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener la reseña.', error: error.message });
+  }
+};

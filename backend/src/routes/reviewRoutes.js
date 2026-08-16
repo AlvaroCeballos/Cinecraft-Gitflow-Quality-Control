@@ -9,5 +9,6 @@ router.use(verifyToken);
 
 router.post('/', reviewController.createReview);
 router.get('/', reviewController.getMyReviews);
+router.get('/:id', reviewController.getReviewById);
 
 module.exports = router;
