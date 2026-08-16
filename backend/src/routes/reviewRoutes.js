@@ -8,5 +8,6 @@ const { verifyToken } = require('../middlewares/authMiddleware');
 router.use(verifyToken);
 
 router.post('/', reviewController.createReview);
+router.get('/', reviewController.getMyReviews);
 
 module.exports = router;

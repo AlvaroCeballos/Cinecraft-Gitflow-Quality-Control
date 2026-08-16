@@ -63,3 +63,33 @@ exports.createReview = async (req, res) => {
     res.status(500).json({ message: 'Error al crear la reseña.', error: error.message });
   }
 };
+
+exports.getMyReviews = async (req, res) => {
+  const usuario_id = req.user.id;
+
+  try {
+    const [reviews] = await pool.query(
+      `SELECT 
+        r.id, 
+        r.usuario_id, 
+        r.etiqueta_id, 
+        r.titulo_pelicula, 
+        r.calificacion, 
+        r.comentario, 
+        r.destacada, 
+        r.archivada, 
+        r.fecha_creacion,
+        e.nombre AS etiqueta_nombre
+      FROM resena r
+      LEFT JOIN etiqueta e ON r.etiqueta_id = e.id
+      WHERE r.usuario_id = ?
+      ORDER BY r.fecha_creacion DESC`,
+      [usuario_id]
+    );
+
+    res.status(200).json(reviews);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener reseñas.', error: error.message });
+  }
+};
