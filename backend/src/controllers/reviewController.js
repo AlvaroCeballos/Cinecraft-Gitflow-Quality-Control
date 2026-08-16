@@ -215,3 +215,51 @@ exports.deleteReview = async (req, res) => {
     res.status(500).json({ message: 'Error al eliminar la reseña.', error: error.message });
   }
 };
+
+// ETIQUETAS
+
+exports.getAllTags = async (req, res) => {
+  try {
+    const [tags] = await pool.query('SELECT id, nombre FROM etiqueta ORDER BY nombre ASC');
+    res.status(200).json(tags);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener etiquetas.', error: error.message });
+  }
+};
+
+exports.createTag = async (req, res) => {
+  const { nombre } = req.body;
+
+  if (!nombre || nombre.trim() === '') {
+    return res.status(400).json({ message: 'El nombre de la etiqueta es obligatorio.' });
+  }
+
+  try {
+    // Verificar si ya existe
+    const [existingTag] = await pool.query(
+      'SELECT id FROM etiqueta WHERE nombre = ?',
+      [nombre]
+    );
+
+    if (existingTag.length > 0) {
+      return res.status(400).json({ message: 'La etiqueta ya existe.' });
+    }
+
+    const [result] = await pool.query(
+      'INSERT INTO etiqueta (nombre) VALUES (?)',
+      [nombre]
+    );
+
+    res.status(201).json({
+      message: 'Etiqueta creada exitosamente.',
+      tag: {
+        id: result.insertId,
+        nombre
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al crear la etiqueta.', error: error.message });
+  }
+};
