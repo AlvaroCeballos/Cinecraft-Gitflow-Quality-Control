@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReviewCard from '../components/reviewCard';
 import ReviewForm from '../components/reviewForm';
+import DeleteConfirmationModal from '../components/deleteConfirmationModal';
 import ShareModal from '../components/ShareModal';
+import * as reviewService from '../services/reviewService';
 
 export default function Reviews() {
   const navigate = useNavigate();
@@ -16,7 +18,6 @@ export default function Reviews() {
   const [reviewToShare, setReviewToShare] = useState(null);
   const [message, setMessage] = useState({ type: '', text: '' });
 
-  // Cargar reseñas y etiquetas al montar
   useEffect(() => {
     loadReviews();
     loadTags();
@@ -56,10 +57,7 @@ export default function Reviews() {
     try {
       setIsLoading(true);
       await reviewService.createReview(formData);
-      setMessage({
-        type: 'success',
-        text: 'Reseña creada exitosamente'
-      });
+      setMessage({ type: 'success', text: 'Reseña creada exitosamente' });
       loadReviews();
       loadTags();
     } catch (error) {
@@ -75,14 +73,10 @@ export default function Reviews() {
 
   const handleUpdateReview = async (formData) => {
     if (!editingReview) return;
-
     try {
       setIsLoading(true);
       await reviewService.updateReview(editingReview.id, formData);
-      setMessage({
-        type: 'success',
-        text: 'Reseña actualizada exitosamente'
-      });
+      setMessage({ type: 'success', text: 'Reseña actualizada exitosamente' });
       setEditingReview(null);
       loadReviews();
       loadTags();
@@ -99,14 +93,10 @@ export default function Reviews() {
 
   const handleDeleteReview = async () => {
     if (!reviewToDelete) return;
-
     try {
       setIsLoading(true);
       await reviewService.deleteReview(reviewToDelete.id);
-      setMessage({
-        type: 'success',
-        text: 'Reseña eliminada exitosamente'
-      });
+      setMessage({ type: 'success', text: 'Reseña eliminada exitosamente' });
       setDeleteModalOpen(false);
       setReviewToDelete(null);
       loadReviews();
@@ -157,7 +147,7 @@ export default function Reviews() {
         </div>
       )}
 
-      {/* Formulario */}
+      {/* Formulario de creación / edición */}
       <ReviewForm
         initialData={editingReview}
         tags={tags}

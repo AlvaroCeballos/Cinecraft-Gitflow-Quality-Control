@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
 import AdminRequests from './pages/AdminRequests';
+import Reviews from './pages/Reviews';
 import SharedWithMe from './pages/SharedWithMe';
 import SharedByMe from './pages/SharedByMe';
 
