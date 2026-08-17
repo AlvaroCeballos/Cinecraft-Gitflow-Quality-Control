@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReviewCard from '../components/reviewCard';
 import ReviewForm from '../components/reviewForm';
-import DeleteConfirmationModal from '../components/deleteConfirmationModal';
-import * as reviewService from '../services/reviewService';
+import ShareModal from '../components/ShareModal';
 
 export default function Reviews() {
   const navigate = useNavigate();
@@ -13,6 +12,8 @@ export default function Reviews() {
   const [editingReview, setEditingReview] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [reviewToDelete, setReviewToDelete] = useState(null);
+  const [shareModalOpen, setShareModalOpen] = useState(false);
+  const [reviewToShare, setReviewToShare] = useState(null);
   const [message, setMessage] = useState({ type: '', text: '' });
 
   // Cargar reseñas y etiquetas al montar
@@ -127,6 +128,11 @@ export default function Reviews() {
     setDeleteModalOpen(true);
   };
 
+  const openShareModal = (review) => {
+    setReviewToShare(review);
+    setShareModalOpen(true);
+  };
+
   const handleEditClick = (review) => {
     setEditingReview(review);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -180,6 +186,7 @@ export default function Reviews() {
                 review={review}
                 onEdit={handleEditClick}
                 onDelete={openDeleteModal}
+                onShare={openShareModal}
               />
             ))}
           </div>
@@ -196,6 +203,19 @@ export default function Reviews() {
           setReviewToDelete(null);
         }}
         isLoading={isLoading}
+      />
+
+      {/* Modal de compartir reseña */}
+      <ShareModal
+        isOpen={shareModalOpen}
+        review={reviewToShare}
+        onClose={() => {
+          setShareModalOpen(false);
+          setReviewToShare(null);
+        }}
+        onSuccess={(msg) => {
+          setMessage({ type: 'success', text: msg });
+        }}
       />
     </div>
   );
