@@ -14,6 +14,31 @@ const getPendingRequests = async (req, res) => {
   }
 };
 
+// Obtener el historial de solicitudes que ya fueron resueltas
+const getRequestHistory = async (req, res) => {
+  try {
+    const [rows] = await db.query(
+      `SELECT
+        id,
+        nombre,
+        correo,
+        estado_solicitud,
+        motivo_rechazo,
+        fecha_solicitud,
+        fecha_resolucion
+      FROM usuario
+      WHERE rol = "usuario"
+        AND estado_solicitud IN ("aprobado", "rechazado")
+      ORDER BY fecha_resolucion DESC, fecha_solicitud DESC`
+    );
+
+    res.json(rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al obtener el historial de solicitudes' });
+  }
+};
+
 // 2. Aceptar usuario
 const acceptRequest = async (req, res) => {
   const { id } = req.params;
@@ -65,6 +90,7 @@ const rejectRequest = async (req, res) => {
 
 module.exports = {
   getPendingRequests,
+  getRequestHistory,
   acceptRequest,
   rejectRequest
 };
