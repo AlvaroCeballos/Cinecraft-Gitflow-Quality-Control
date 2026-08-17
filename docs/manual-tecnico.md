@@ -143,3 +143,142 @@ npm run build
 ```
 
 Los archivos de producción se generan en `frontend/dist/`.
+
+## 9. Modelo de datos
+
+### `usuario`
+
+Almacena identidad, credenciales, rol y estado de cada solicitud. Los estados permitidos son `pendiente`, `aprobado` y `rechazado`. `fecha_solicitud` registra el alta y `fecha_resolucion` permite construir el historial administrativo.
+
+### `etiqueta`
+
+Catálogo reutilizable para clasificar las reseñas. El nombre de cada etiqueta es único.
+
+### `resena`
+
+Pertenece a un usuario y una etiqueta. Guarda título, calificación de 1 a 5, comentario, fecha de creación y los indicadores `destacada` y `archivada`.
+
+### `resena_compartida`
+
+Relaciona una reseña con el usuario que la envía y el usuario que la recibe. `fecha_compartido` permite ordenar el historial de intercambios.
+
+```text
+usuario 1 ─── N resena N ─── 1 etiqueta
+   │              │
+   └── N resena_compartida N ┘
+```
+
+El diagrama completo se encuentra en `docs/img/erd-cinecraft.png`.
+
+## 10. API REST
+
+La URL base predeterminada es `http://localhost:5000/api`.
+
+### Autenticación y perfil
+
+| Método | Ruta | Autenticación | Descripción |
+|---|---|---|---|
+| `POST` | `/auth/register` | No | Crea una solicitud de registro pendiente. |
+| `POST` | `/auth/login` | No | Valida credenciales y devuelve un JWT. |
+| `GET` | `/auth/profile` | JWT | Consulta el perfil autenticado. |
+| `PUT` | `/auth/profile` | JWT | Actualiza nombre y, opcionalmente, contraseña. |
+
+### Reseñas y etiquetas
+
+| Método | Ruta | Autenticación | Descripción |
+|---|---|---|---|
+| `POST` | `/reviews` | JWT | Crea una reseña. |
+| `GET` | `/reviews` | JWT | Lista las reseñas propias. |
+| `GET` | `/reviews/:id` | JWT | Consulta una reseña propia. |
+| `PUT` | `/reviews/:id` | JWT | Modifica una reseña propia. |
+| `DELETE` | `/reviews/:id` | JWT | Elimina una reseña propia. |
+| `PATCH` | `/reviews/:id/destacar` | JWT | Alterna el estado destacado. |
+| `PATCH` | `/reviews/:id/archivar` | JWT | Alterna el estado archivado. |
+| `GET` | `/reviews/tags/all` | JWT | Lista las etiquetas disponibles. |
+| `POST` | `/reviews/tags/create` | JWT | Crea una etiqueta. |
+
+### Reseñas compartidas
+
+| Método | Ruta | Autenticación | Descripción |
+|---|---|---|---|
+| `GET` | `/share/users` | JWT | Lista usuarios disponibles para compartir. |
+| `POST` | `/share` | JWT | Comparte una reseña propia. |
+| `GET` | `/share/received` | JWT | Lista reseñas recibidas. |
+| `GET` | `/share/sent` | JWT | Lista reseñas enviadas. |
+
+### Administración
+
+Todas estas rutas requieren JWT y rol `administrador`.
+
+| Método | Ruta | Descripción |
+|---|---|---|
+| `GET` | `/admin/pending` | Lista solicitudes pendientes. |
+| `GET` | `/admin/history` | Lista solicitudes aprobadas y rechazadas. |
+| `PUT` | `/admin/accept/:id` | Aprueba una solicitud y envía correo. |
+| `PUT` | `/admin/reject/:id` | Rechaza una solicitud y envía correo. |
+| `GET` | `/admin/reports/top-reviewers` | Devuelve los cinco usuarios con más reseñas. |
+| `GET` | `/admin/reports/top-sharers` | Devuelve los cinco usuarios que más comparten. |
+
+## 11. Autenticación y autorización
+
+1. El usuario envía correo y contraseña a `/auth/login`.
+2. El backend verifica el hash con `bcryptjs` y comprueba que la solicitud esté aprobada.
+3. Se firma un JWT con identificador, correo, rol y nombre.
+4. El frontend guarda el token y lo agrega como `Authorization: Bearer <token>` mediante un interceptor de Axios.
+5. `authMiddleware.js` valida la firma y coloca los datos en `req.user`.
+6. Para las rutas administrativas, `requireAdmin.js` comprueba que `req.user.rol` sea `administrador`.
+
+En ambientes compartidos o de producción, `JWT_SECRET` debe configurarse obligatoriamente con un valor seguro y no debe dependerse del valor de respaldo incluido para desarrollo.
+
+## 12. Rutas del frontend
+
+| Ruta | Pantalla |
+|---|---|
+| `/login` | Inicio de sesión. |
+| `/register` | Solicitud de registro. |
+| `/profile` | Edición de perfil. |
+| `/reviews` | Gestión de reseñas activas, destacadas y archivadas. |
+| `/shared-with-me` | Reseñas recibidas. |
+| `/shared-by-me` | Historial de reseñas enviadas. |
+| `/admin/requests` | Solicitudes pendientes. |
+| `/admin/requests/history` | Historial de solicitudes resueltas. |
+| `/admin/reports` | Reportes Top 5. |
+
+## 13. Verificación y mantenimiento
+
+### Comprobar sintaxis del backend
+
+```bash
+node --check backend/src/controllers/adminController.js
+node --check backend/src/routes/adminRoutes.js
+```
+
+### Revisar el frontend
+
+```bash
+cd frontend
+npm run lint
+npm run build
+```
+
+El proyecto todavía no define una suite automatizada de pruebas en sus archivos `package.json`. Antes de publicar una versión se recomienda agregar pruebas de controladores, autorización, consultas y componentes críticos.
+
+### Verificación manual mínima
+
+1. Registrar un usuario y confirmar que quede pendiente.
+2. Ingresar como administrador y aprobar o rechazar la solicitud.
+3. Iniciar sesión con un usuario aprobado.
+4. Crear, editar, destacar, archivar y eliminar una reseña.
+5. Compartir una reseña y comprobar las vistas de enviados y recibidos.
+6. Consultar el historial administrativo.
+7. Confirmar los dos reportes Top 5 contra los datos almacenados.
+
+## 14. Gitflow del proyecto
+
+- `main`: versiones estables etiquetadas.
+- `develop`: integración de las próximas funcionalidades.
+- `feature/<nombre>_<carnet>`: desarrollo de una funcionalidad.
+- `hotfix/<nombre>_<carnet>`: correcciones urgentes creadas desde `main`.
+- `release/<version>`: preparación de una publicación.
+
+Cada feature debe crearse desde `develop` actualizado, contener commits pequeños con Conventional Commits e integrarse nuevamente mediante merge o pull request.
