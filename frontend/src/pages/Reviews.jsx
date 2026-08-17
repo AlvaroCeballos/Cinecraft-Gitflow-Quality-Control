@@ -17,9 +17,12 @@ export default function Reviews() {
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [reviewToShare, setReviewToShare] = useState(null);
   const [message, setMessage] = useState({ type: '', text: '' });
+  const [activeTab, setActiveTab] = useState('activas');
 
-  const featuredReviews = reviews.filter((r) => r.destacada);
-  const otherReviews = reviews.filter((r) => !r.destacada);
+  const activeReviews = reviews.filter((r) => !r.archivada);
+  const archivedReviews = reviews.filter((r) => r.archivada);
+  const featuredReviews = activeReviews.filter((r) => r.destacada);
+  const otherReviews = activeReviews.filter((r) => !r.destacada);
 
   useEffect(() => {
     loadReviews();
@@ -136,6 +139,31 @@ export default function Reviews() {
     }
   };
 
+  const handleToggleArchived = async (id) => {
+    const review = reviews.find((r) => r.id === id);
+    if (!review) return;
+
+    if (!review.archivada) {
+      const confirmed = window.confirm(
+        `¿Archivar "${review.titulo_pelicula}"? Dejará de aparecer en el dashboard principal, pero podrás desarchivarla cuando quieras desde la pestaña "Archivadas".`
+      );
+      if (!confirmed) return;
+    }
+
+    try {
+      const response = await reviewService.toggleArchived(id);
+      setReviews((prev) =>
+        prev.map((r) => (r.id === id ? { ...r, archivada: response.data.archivada } : r))
+      );
+    } catch (error) {
+      console.error(error);
+      setMessage({
+        type: 'error',
+        text: error.response?.data?.message || 'Error al actualizar el estado de archivado'
+      });
+    }
+  };
+
   const openShareModal = (review) => {
     setReviewToShare(review);
     setShareModalOpen(true);
@@ -174,58 +202,117 @@ export default function Reviews() {
         isLoading={isLoading}
       />
 
-      {/* Reseñas destacadas */}
-      {featuredReviews.length > 0 && (
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-slate-100 mb-6 flex items-center gap-2">
-            <span className="text-yellow-400">★</span> Destacadas ({featuredReviews.length})
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredReviews.map((review) => (
-              <ReviewCard
-                key={review.id}
-                review={review}
-                onEdit={handleEditClick}
-                onDelete={openDeleteModal}
-                onShare={openShareModal}
-                onToggleFeatured={handleToggleFeatured}
-              />
-            ))}
+      {/* Pestañas Activas / Archivadas */}
+      <div className="flex gap-2 mb-8 border-b border-slate-800">
+        <button
+          onClick={() => setActiveTab('activas')}
+          className={`px-4 py-2 text-sm font-medium border-b-2 transition ${
+            activeTab === 'activas'
+              ? 'border-indigo-500 text-white'
+              : 'border-transparent text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          Activas ({activeReviews.length})
+        </button>
+        <button
+          onClick={() => setActiveTab('archivadas')}
+          className={`px-4 py-2 text-sm font-medium border-b-2 transition ${
+            activeTab === 'archivadas'
+              ? 'border-indigo-500 text-white'
+              : 'border-transparent text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          🗄️ Archivadas ({archivedReviews.length})
+        </button>
+      </div>
+
+      {activeTab === 'activas' ? (
+        <>
+          {/* Reseñas destacadas */}
+          {featuredReviews.length > 0 && (
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-slate-100 mb-6 flex items-center gap-2">
+                <span className="text-yellow-400">★</span> Destacadas ({featuredReviews.length})
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {featuredReviews.map((review) => (
+                  <ReviewCard
+                    key={review.id}
+                    review={review}
+                    onEdit={handleEditClick}
+                    onDelete={openDeleteModal}
+                    onShare={openShareModal}
+                    onToggleFeatured={handleToggleFeatured}
+                    onToggleArchived={handleToggleArchived}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Listado de reseñas */}
+          <div>
+            <h2 className="text-2xl font-bold text-slate-100 mb-6">
+              Mis Reseñas {activeReviews.length > 0 && `(${activeReviews.length})`}
+            </h2>
+
+            {otherReviews.length === 0 ? (
+              <div className="bg-slate-800 border border-slate-700 rounded-lg p-8 text-center">
+                <p className="text-slate-400 text-lg">
+                  {isLoading
+                    ? 'Cargando reseñas...'
+                    : reviews.length === 0
+                    ? 'Aún no tienes reseñas. ¡Crea tu primera reseña!'
+                    : activeReviews.length === 0
+                    ? 'No tienes reseñas activas. Revisa la pestaña "Archivadas".'
+                    : 'Todas tus reseñas activas están destacadas.'}
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {otherReviews.map((review) => (
+                  <ReviewCard
+                    key={review.id}
+                    review={review}
+                    onEdit={handleEditClick}
+                    onDelete={openDeleteModal}
+                    onShare={openShareModal}
+                    onToggleFeatured={handleToggleFeatured}
+                    onToggleArchived={handleToggleArchived}
+                  />
+                ))}
+              </div>
+            )}
           </div>
+        </>
+      ) : (
+        /* Reseñas archivadas */
+        <div>
+          <h2 className="text-2xl font-bold text-slate-100 mb-6 flex items-center gap-2">
+            🗄️ Archivadas ({archivedReviews.length})
+          </h2>
+
+          {archivedReviews.length === 0 ? (
+            <div className="bg-slate-800 border border-slate-700 rounded-lg p-8 text-center">
+              <p className="text-slate-400 text-lg">No tienes reseñas archivadas.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {archivedReviews.map((review) => (
+                <ReviewCard
+                  key={review.id}
+                  review={review}
+                  onEdit={handleEditClick}
+                  onDelete={openDeleteModal}
+                  onShare={openShareModal}
+                  onToggleFeatured={handleToggleFeatured}
+                  onToggleArchived={handleToggleArchived}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
-
-      {/* Listado de reseñas */}
-      <div>
-        <h2 className="text-2xl font-bold text-slate-100 mb-6">
-          Mis Reseñas {reviews.length > 0 && `(${reviews.length})`}
-        </h2>
-
-        {otherReviews.length === 0 ? (
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-8 text-center">
-            <p className="text-slate-400 text-lg">
-              {isLoading
-                ? 'Cargando reseñas...'
-                : reviews.length === 0
-                ? 'Aún no tienes reseñas. ¡Crea tu primera reseña!'
-                : 'Todas tus reseñas están destacadas.'}
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {otherReviews.map((review) => (
-              <ReviewCard
-                key={review.id}
-                review={review}
-                onEdit={handleEditClick}
-                onDelete={openDeleteModal}
-                onShare={openShareModal}
-                onToggleFeatured={handleToggleFeatured}
-              />
-            ))}
-          </div>
-        )}
-      </div>
 
       {/* Modal de confirmación de eliminación */}
       <DeleteConfirmationModal
