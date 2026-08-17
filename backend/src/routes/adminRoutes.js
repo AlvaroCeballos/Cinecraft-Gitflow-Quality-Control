@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   getPendingRequests,
   getRequestHistory,
+  getTopReviewers,
   acceptRequest,
   rejectRequest
 } = require('../controllers/adminController');
@@ -14,6 +15,7 @@ router.use(verifyToken, requireAdmin);
 
 router.get('/pending', getPendingRequests);
 router.get('/history', getRequestHistory);
+router.get('/reports/top-reviewers', getTopReviewers);
 router.put('/accept/:id', acceptRequest);
 router.put('/reject/:id', rejectRequest);
 
