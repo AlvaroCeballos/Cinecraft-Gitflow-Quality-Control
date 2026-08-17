@@ -36,6 +36,9 @@ export default function Navbar() {
                 <Link to="/admin/requests/history" className="text-amber-400 hover:text-amber-300 font-medium transition-colors">
                   Historial
                 </Link>
+                <Link to="/admin/reports" className="text-amber-400 hover:text-amber-300 font-medium transition-colors">
+                  Reportes Top 5
+                </Link>
               </>
             )}
             <span className="text-slate-400">|</span>
