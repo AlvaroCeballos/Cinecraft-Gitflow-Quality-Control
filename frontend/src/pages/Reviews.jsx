@@ -18,6 +18,9 @@ export default function Reviews() {
   const [reviewToShare, setReviewToShare] = useState(null);
   const [message, setMessage] = useState({ type: '', text: '' });
 
+  const featuredReviews = reviews.filter((r) => r.destacada);
+  const otherReviews = reviews.filter((r) => !r.destacada);
+
   useEffect(() => {
     loadReviews();
     loadTags();
@@ -118,6 +121,21 @@ export default function Reviews() {
     setDeleteModalOpen(true);
   };
 
+  const handleToggleFeatured = async (id) => {
+    try {
+      const response = await reviewService.toggleFeatured(id);
+      setReviews((prev) =>
+        prev.map((r) => (r.id === id ? { ...r, destacada: response.data.destacada } : r))
+      );
+    } catch (error) {
+      console.error(error);
+      setMessage({
+        type: 'error',
+        text: error.response?.data?.message || 'Error al actualizar el estado destacado'
+      });
+    }
+  };
+
   const openShareModal = (review) => {
     setReviewToShare(review);
     setShareModalOpen(true);
@@ -156,27 +174,53 @@ export default function Reviews() {
         isLoading={isLoading}
       />
 
-      {/* Listado de reseñas */}
-      <div>
-        <h2 className="text-2xl font-bold text-slate-100 mb-6">
-          Mis Reseñas {reviews.length > 0 && `(${reviews.length})`}
-        </h2>
-
-        {reviews.length === 0 ? (
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-8 text-center">
-            <p className="text-slate-400 text-lg">
-              {isLoading ? 'Cargando reseñas...' : 'Aún no tienes reseñas. ¡Crea tu primera reseña!'}
-            </p>
-          </div>
-        ) : (
+      {/* Reseñas destacadas */}
+      {featuredReviews.length > 0 && (
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-slate-100 mb-6 flex items-center gap-2">
+            <span className="text-yellow-400">★</span> Destacadas ({featuredReviews.length})
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {reviews.map((review) => (
+            {featuredReviews.map((review) => (
               <ReviewCard
                 key={review.id}
                 review={review}
                 onEdit={handleEditClick}
                 onDelete={openDeleteModal}
                 onShare={openShareModal}
+                onToggleFeatured={handleToggleFeatured}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Listado de reseñas */}
+      <div>
+        <h2 className="text-2xl font-bold text-slate-100 mb-6">
+          Mis Reseñas {reviews.length > 0 && `(${reviews.length})`}
+        </h2>
+
+        {otherReviews.length === 0 ? (
+          <div className="bg-slate-800 border border-slate-700 rounded-lg p-8 text-center">
+            <p className="text-slate-400 text-lg">
+              {isLoading
+                ? 'Cargando reseñas...'
+                : reviews.length === 0
+                ? 'Aún no tienes reseñas. ¡Crea tu primera reseña!'
+                : 'Todas tus reseñas están destacadas.'}
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {otherReviews.map((review) => (
+              <ReviewCard
+                key={review.id}
+                review={review}
+                onEdit={handleEditClick}
+                onDelete={openDeleteModal}
+                onShare={openShareModal}
+                onToggleFeatured={handleToggleFeatured}
               />
             ))}
           </div>
