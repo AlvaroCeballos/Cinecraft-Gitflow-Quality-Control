@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import AdminRequests from './pages/AdminRequests';
 import AdminRequestHistory from './pages/AdminRequestHistory';
+import AdminReports from './pages/AdminReports';
 import Reviews from './pages/Reviews';
 import SharedWithMe from './pages/SharedWithMe';
 import SharedByMe from './pages/SharedByMe';
@@ -21,6 +22,7 @@ export default function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/admin/requests" element={<AdminRequests />} />
             <Route path="/admin/requests/history" element={<AdminRequestHistory />} />
+            <Route path="/admin/reports" element={<AdminReports />} />
             <Route path="/reviews" element={<Reviews />} />  
             <Route path="/shared-with-me" element={<SharedWithMe />} />
             <Route path="/shared-by-me" element={<SharedByMe />} />

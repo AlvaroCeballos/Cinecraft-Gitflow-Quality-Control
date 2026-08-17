@@ -39,6 +39,56 @@ const getRequestHistory = async (req, res) => {
   }
 };
 
+// Obtener los cinco usuarios con más reseñas creadas
+const getTopReviewers = async (req, res) => {
+  try {
+    const [rows] = await db.query(
+      `SELECT
+        u.id,
+        u.nombre,
+        u.correo,
+        COUNT(r.id) AS total_resenas
+      FROM usuario u
+      INNER JOIN resena r ON r.usuario_id = u.id
+      WHERE u.rol = "usuario"
+        AND u.estado_solicitud = "aprobado"
+      GROUP BY u.id, u.nombre, u.correo
+      ORDER BY total_resenas DESC, u.nombre ASC
+      LIMIT 5`
+    );
+
+    res.json(rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al generar el Top 5 de usuarios con más reseñas' });
+  }
+};
+
+// Obtener los cinco usuarios que más reseñas han compartido
+const getTopSharers = async (req, res) => {
+  try {
+    const [rows] = await db.query(
+      `SELECT
+        u.id,
+        u.nombre,
+        u.correo,
+        COUNT(rc.id) AS total_compartidas
+      FROM usuario u
+      INNER JOIN resena_compartida rc ON rc.usuario_origen_id = u.id
+      WHERE u.rol = "usuario"
+        AND u.estado_solicitud = "aprobado"
+      GROUP BY u.id, u.nombre, u.correo
+      ORDER BY total_compartidas DESC, u.nombre ASC
+      LIMIT 5`
+    );
+
+    res.json(rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al generar el Top 5 de usuarios que más comparten' });
+  }
+};
+
 // 2. Aceptar usuario
 const acceptRequest = async (req, res) => {
   const { id } = req.params;
@@ -91,6 +141,8 @@ const rejectRequest = async (req, res) => {
 module.exports = {
   getPendingRequests,
   getRequestHistory,
+  getTopReviewers,
+  getTopSharers,
   acceptRequest,
   rejectRequest
 };
