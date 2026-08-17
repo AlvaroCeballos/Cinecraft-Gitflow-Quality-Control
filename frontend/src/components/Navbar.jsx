@@ -29,9 +29,14 @@ export default function Navbar() {
               📤 Mis Compartidas
             </Link>
             {user.rol === 'administrador' && (
-              <Link to="/admin/requests" className="text-amber-400 hover:text-amber-300 font-medium transition-colors">
-                Solicitudes Admin
-              </Link>
+              <>
+                <Link to="/admin/requests" className="text-amber-400 hover:text-amber-300 font-medium transition-colors">
+                  Solicitudes pendientes
+                </Link>
+                <Link to="/admin/requests/history" className="text-amber-400 hover:text-amber-300 font-medium transition-colors">
+                  Historial
+                </Link>
+              </>
             )}
             <span className="text-slate-400">|</span>
             <Link to="/profile" className="text-slate-300 hover:text-white transition-colors">

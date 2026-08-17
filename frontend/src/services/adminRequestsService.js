@@ -5,6 +5,11 @@ export const getPendingRequests = async () => {
   return response.data;
 };
 
+export const getRequestHistory = async () => {
+  const response = await api.get('/admin/history');
+  return response.data;
+};
+
 export const acceptRequest = async (id) => {
   const response = await api.put(`/admin/accept/${id}`);
   return response.data;
