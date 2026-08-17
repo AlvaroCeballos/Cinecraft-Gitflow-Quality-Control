@@ -191,6 +191,33 @@ exports.updateReview = async (req, res) => {
   }
 };
 
+exports.toggleFeatured = async (req, res) => {
+  const { id } = req.params;
+  const usuario_id = req.user.id;
+
+  try {
+    const [reviewCheck] = await pool.query(
+      'SELECT destacada FROM resena WHERE id = ? AND usuario_id = ?',
+      [id, usuario_id]
+    );
+
+    if (reviewCheck.length === 0) {
+      return res.status(404).json({ message: 'Reseña no encontrada o no tienes permiso para modificarla.' });
+    }
+
+    const nuevoEstado = !reviewCheck[0].destacada;
+    await pool.query('UPDATE resena SET destacada = ? WHERE id = ? AND usuario_id = ?', [nuevoEstado, id, usuario_id]);
+
+    res.status(200).json({
+      message: nuevoEstado ? 'Reseña marcada como destacada.' : 'Reseña quitada de destacadas.',
+      destacada: nuevoEstado
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al actualizar el estado destacado.', error: error.message });
+  }
+};
+
 exports.deleteReview = async (req, res) => {
   const { id } = req.params;
   const usuario_id = req.user.id;
