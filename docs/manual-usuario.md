@@ -95,3 +95,101 @@ Para archivar:
 3. Confirmar la acción.
 
 La reseña se mueve de la vista principal a la pestaña **Archivadas**. Para recuperarla, abrir esa pestaña y presionar **Desarchivar**.
+
+## 11. Compartir una reseña
+
+1. Buscar una reseña propia y presionar **Compartir**.
+2. Esperar que se cargue la lista de usuarios activos.
+3. Seleccionar un destinatario.
+4. Presionar **Compartir** en la ventana de confirmación.
+
+No es posible compartir una reseña con la misma cuenta ni enviarla más de una vez al mismo destinatario.
+
+## 12. Consultar reseñas recibidas
+
+Seleccionar **Compartidos Conmigo** en la barra superior. Cada tarjeta indica:
+
+- Usuario que compartió la reseña.
+- Fecha del envío.
+- Título de la película.
+- Calificación, etiqueta y comentario.
+
+Si todavía no se ha recibido ninguna reseña, la aplicación mostrará un estado vacío.
+
+## 13. Consultar reseñas enviadas
+
+Seleccionar **Mis Compartidas**. La tabla muestra el historial de reseñas enviadas, el destinatario y la fecha en que se compartió cada una.
+
+## 14. Funciones del administrador
+
+Los accesos administrativos solamente aparecen cuando la sesión tiene el rol `administrador`.
+
+### 14.1 Solicitudes pendientes
+
+1. Seleccionar **Solicitudes pendientes**.
+2. Revisar el nombre, correo y fecha de cada solicitud.
+3. Elegir **Aceptar** o **Rechazar**.
+
+Al aceptar se solicita una confirmación. Al rechazar se puede escribir un motivo y luego confirmar la acción. CineCraft intenta enviar al usuario una notificación por correo.
+
+### 14.2 Historial de solicitudes
+
+Seleccionar **Historial** para consultar las solicitudes resueltas. La tabla muestra:
+
+- Nombre y correo del usuario.
+- Fecha de solicitud.
+- Fecha de resolución.
+- Estado aprobado o rechazado.
+- Motivo del rechazo, cuando corresponda.
+
+### 14.3 Reportes Top 5
+
+Seleccionar **Reportes Top 5**. Se muestran dos clasificaciones:
+
+1. Los cinco usuarios aprobados con más reseñas creadas.
+2. Los cinco usuarios aprobados que más reseñas han compartido.
+
+Cada clasificación muestra la posición, el nombre, el correo y la cantidad acumulada. Si todavía no existe actividad, se presenta un mensaje informativo.
+
+## 15. Mensajes y estados visuales
+
+CineCraft comunica el resultado de las operaciones mediante:
+
+- Textos de carga mientras se consulta o guarda información.
+- Mensajes verdes para operaciones exitosas.
+- Mensajes rojos cuando una operación falla.
+- Confirmaciones antes de eliminar, archivar, aprobar o rechazar.
+- Estados vacíos cuando una lista todavía no contiene información.
+
+No se debe cerrar la página mientras un botón indique que una operación está en proceso.
+
+## 16. Solución de problemas frecuentes
+
+### No puedo iniciar sesión
+
+- Confirmar que el correo y la contraseña sean correctos.
+- Verificar que la solicitud haya sido aprobada.
+- Si fue rechazada, revisar el motivo mostrado.
+
+### No aparecen usuarios para compartir
+
+Solo se muestran otros usuarios con solicitud aprobada. Debe existir al menos otra cuenta activa.
+
+### Una operación muestra error de conexión
+
+Comprobar que el backend esté activo y que el equipo tenga acceso a la base de datos configurada.
+
+### No recibí el correo de aprobación o rechazo
+
+Revisar la carpeta de correo no deseado. Si no aparece, informar al administrador para que verifique la configuración del servicio de correo.
+
+### La sesión dejó de funcionar
+
+El token de acceso tiene una duración limitada. Cerrar la sesión e ingresar nuevamente.
+
+## 17. Recomendaciones de seguridad
+
+- No compartir la contraseña ni el token de sesión.
+- Cerrar sesión en computadoras compartidas.
+- Utilizar una contraseña que no se use en otros servicios.
+- No incluir datos sensibles en los comentarios de las reseñas.
