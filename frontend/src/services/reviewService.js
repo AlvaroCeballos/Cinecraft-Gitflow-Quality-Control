@@ -25,6 +25,10 @@ export const toggleFeatured = async (id) => {
   return API.patch(`/reviews/${id}/destacar`);
 };
 
+export const toggleArchived = async (id) => {
+  return API.patch(`/reviews/${id}/archivar`);
+};
+
 // ETIQUETAS 
 
 export const getAllTags = async () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ReviewCard({ review, onEdit, onDelete, onShare, onToggleFeatured }) {
+export default function ReviewCard({ review, onEdit, onDelete, onShare, onToggleFeatured, onToggleArchived }) {
   const renderStars = (rating) => {
     return (
       <div className="flex gap-1">
@@ -77,6 +77,13 @@ export default function ReviewCard({ review, onEdit, onDelete, onShare, onToggle
           className="flex-1 bg-red-600 hover:bg-red-700 text-white py-1.5 rounded text-xs font-medium transition"
         >
           Eliminar
+        </button>
+        <button
+          onClick={() => onToggleArchived(review.id)}
+          className="bg-slate-700 hover:bg-slate-600 text-slate-100 px-3 py-1.5 rounded text-xs font-medium transition"
+          title={review.archivada ? 'Restaurar al dashboard principal' : 'Archivar reseña'}
+        >
+          {review.archivada ? '📤 Desarchivar' : '🗄️ Archivar'}
         </button>
       </div>
     </div>
