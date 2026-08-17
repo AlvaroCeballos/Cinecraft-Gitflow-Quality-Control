@@ -4,6 +4,7 @@ const {
   getPendingRequests,
   getRequestHistory,
   getTopReviewers,
+  getTopSharers,
   acceptRequest,
   rejectRequest
 } = require('../controllers/adminController');
@@ -16,6 +17,7 @@ router.use(verifyToken, requireAdmin);
 router.get('/pending', getPendingRequests);
 router.get('/history', getRequestHistory);
 router.get('/reports/top-reviewers', getTopReviewers);
+router.get('/reports/top-sharers', getTopSharers);
 router.put('/accept/:id', acceptRequest);
 router.put('/reject/:id', rejectRequest);
 
