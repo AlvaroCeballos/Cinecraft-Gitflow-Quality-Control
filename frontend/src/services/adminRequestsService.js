@@ -10,6 +10,16 @@ export const getRequestHistory = async () => {
   return response.data;
 };
 
+export const getTopReviewers = async () => {
+  const response = await api.get('/admin/reports/top-reviewers');
+  return response.data;
+};
+
+export const getTopSharers = async () => {
+  const response = await api.get('/admin/reports/top-sharers');
+  return response.data;
+};
+
 export const acceptRequest = async (id) => {
   const response = await api.put(`/admin/accept/${id}`);
   return response.data;
