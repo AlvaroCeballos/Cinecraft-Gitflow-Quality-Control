@@ -57,3 +57,35 @@ Para que las pantallas sean comprensibles se recomienda preparar:
 - Una reseña compartida entre los usuarios de prueba.
 
 No se deben reutilizar contraseñas personales en estas cuentas.
+
+## Procedimiento de captura
+
+1. Actualizar `develop` y ejecutar backend y frontend.
+2. Confirmar que la base de datos contiene únicamente datos de prueba aptos para mostrarse.
+3. Ajustar el navegador a un tamaño consistente, preferentemente `1440 × 900`.
+4. Abrir la pantalla indicada en la matriz.
+5. Ejecutar la acción necesaria y tomar la captura cuando el estado sea visible.
+6. Recortar únicamente el borde externo del navegador, sin ocultar contexto de la aplicación.
+7. Guardar el PNG con el nombre indicado en `docs/img/uiux/`.
+8. Cambiar el estado correspondiente de `Pendiente` a `Completada`.
+9. Insertar la imagen debajo de su evidencia utilizando una ruta relativa.
+
+Ejemplo:
+
+```md
+![Confirmación antes de eliminar una reseña](img/uiux/04-prevencion-eliminar.png)
+```
+
+## Revisión antes del cierre
+
+Antes de integrar esta feature en `develop` se debe comprobar:
+
+- [ ] Existen los diez archivos definidos en la matriz.
+- [ ] Todas las imágenes abren correctamente desde Markdown.
+- [ ] Ninguna captura contiene información sensible.
+- [ ] Cada principio posee al menos una evidencia clara.
+- [ ] Los estados de la matriz aparecen como `Completada`.
+- [ ] El Manual de Usuario coincide con las pantallas capturadas.
+- [ ] La feature fue actualizada con el `develop` más reciente.
+
+La rama no debe integrarse mientras esta lista tenga elementos pendientes.
