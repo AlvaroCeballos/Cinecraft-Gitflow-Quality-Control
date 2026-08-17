@@ -12,6 +12,7 @@ router.get('/', reviewController.getMyReviews);
 router.get('/:id', reviewController.getReviewById);
 router.put('/:id', reviewController.updateReview);
 router.delete('/:id', reviewController.deleteReview);
+router.patch('/:id/destacar', reviewController.toggleFeatured);
 
 router.get('/tags/all', reviewController.getAllTags);
 router.post('/tags/create', reviewController.createTag);

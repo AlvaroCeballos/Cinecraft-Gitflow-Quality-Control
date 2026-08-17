@@ -21,6 +21,10 @@ export const deleteReview = async (id) => {
   return API.delete(`/reviews/${id}`);
 };
 
+export const toggleFeatured = async (id) => {
+  return API.patch(`/reviews/${id}/destacar`);
+};
+
 // ETIQUETAS 
 
 export const getAllTags = async () => {

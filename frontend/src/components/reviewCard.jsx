@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ReviewCard({ review, onEdit, onDelete, onShare }) {
+export default function ReviewCard({ review, onEdit, onDelete, onShare, onToggleFeatured }) {
   const renderStars = (rating) => {
     return (
       <div className="flex gap-1">
@@ -14,7 +14,7 @@ export default function ReviewCard({ review, onEdit, onDelete, onShare }) {
   };
 
   return (
-    <div className="bg-slate-800 border border-slate-700 rounded-lg p-5 hover:border-slate-600 transition flex flex-col justify-between">
+    <div className={`bg-slate-800 border rounded-lg p-5 hover:border-slate-600 transition flex flex-col justify-between ${review.destacada ? 'border-yellow-500/60' : 'border-slate-700'}`}>
       <div>
         {/* Encabezado */}
         <div className="flex justify-between items-start mb-3">
@@ -26,6 +26,13 @@ export default function ReviewCard({ review, onEdit, onDelete, onShare }) {
               </span>
             )}
           </div>
+          <button
+            onClick={() => onToggleFeatured(review.id)}
+            title={review.destacada ? 'Quitar de destacadas' : 'Marcar como destacada'}
+            className={`text-2xl leading-none transition ${review.destacada ? 'text-yellow-400' : 'text-slate-600 hover:text-yellow-400'}`}
+          >
+            {review.destacada ? '★' : '☆'}
+          </button>
         </div>
 
         {/* Calificación */}
