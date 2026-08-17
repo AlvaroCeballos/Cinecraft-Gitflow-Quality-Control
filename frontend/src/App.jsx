@@ -5,7 +5,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
 import AdminRequests from './pages/AdminRequests';
-import Reviews from './pages/Reviews';  
+import Reviews from './pages/Reviews';
+import SharedWithMe from './pages/SharedWithMe';
+import SharedByMe from './pages/SharedByMe';
 
 export default function App() {
   return (
@@ -19,8 +21,10 @@ export default function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/admin/requests" element={<AdminRequests />} />
             <Route path="/reviews" element={<Reviews />} />  
-            <Route path="/" element={<div className="text-center py-20 text-slate-400">Panel Principal (MÓDULOS SIGMAS PENDIENTES)</div>} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="/shared-with-me" element={<SharedWithMe />} />
+            <Route path="/shared-by-me" element={<SharedByMe />} />
+            <Route path="/" element={<Navigate to="/reviews" replace />} />
+            <Route path="*" element={<Navigate to="/reviews" replace />} />
           </Routes>
         </main>
       </div>
