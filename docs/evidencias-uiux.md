@@ -2,90 +2,74 @@
 
 ## Objetivo
 
-Este documento organiza las capturas que demostrarán la aplicación de los seis principios de Jakob Nielsen seleccionados para CineCraft.
+Este documento reúne las capturas obtenidas desde CineCraft en funcionamiento para demostrar la aplicación de los seis principios de Jakob Nielsen seleccionados por el equipo.
 
-Las capturas deben obtenerse desde la aplicación en funcionamiento. No deben utilizarse imágenes simuladas, diseños externos ni pantallas con errores de conexión.
-
-## Convención de archivos
-
-Guardar las imágenes en:
-
-```text
-docs/img/uiux/
-```
-
-Utilizar nombres en minúsculas, sin espacios y con numeración correlativa.
+Todas las imágenes se almacenan en `docs/img/`, utilizan datos de prueba y fueron revisadas para evitar contraseñas, tokens, variables de entorno o credenciales.
 
 ## Matriz de evidencias
 
-| N.º | Principio | Pantalla y acción que debe capturarse | Archivo esperado | Estado |
+| N.º | Principio | Evidencia observada | Archivo | Estado |
 |---:|---|---|---|---|
-| 1.1 | Visibilidad del estado del sistema | Inicio de sesión mientras el botón muestra `Iniciando...`. | `01-visibilidad-login.png` | Pendiente |
-| 1.2 | Visibilidad del estado del sistema | Formulario de reseña mientras muestra `Guardando...` o mensaje de éxito. | `02-visibilidad-resena.png` | Pendiente |
-| 2.1 | Prevención de errores | Formulario intentando guardar sin título o etiqueta y mostrando validación. | `03-prevencion-validacion.png` | Pendiente |
-| 2.2 | Prevención de errores | Confirmación antes de eliminar una reseña. | `04-prevencion-eliminar.png` | Pendiente |
-| 2.3 | Prevención de errores | Confirmación antes de archivar una reseña. | `05-prevencion-archivar.png` | Pendiente |
-| 3.1 | Coincidencia con el mundo real | Tarjeta con estrellas de calificación, acción de eliminar y acción de archivar. | `06-mundo-real-iconos.png` | Pendiente |
-| 4.1 | Control y libertad del usuario | Formulario de edición con el botón `Cancelar`. | `07-control-cancelar.png` | Pendiente |
-| 4.2 | Control y libertad del usuario | Pestaña Archivadas mostrando la acción `Desarchivar`. | `08-control-desarchivar.png` | Pendiente |
-| 5.1 | Consistencia y estándares | Dos pantallas mostrando el mismo uso de azul, rojo y gris en sus acciones. | `09-consistencia-colores.png` | Pendiente |
-| 6.1 | Diseño estético y minimalista | Panel de reseñas con tarjetas, jerarquía visual y espacio en blanco. | `10-diseno-minimalista.png` | Pendiente |
+| 1 | Visibilidad del estado del sistema | La acción principal para crear una reseña se distingue con claridad; la confirmación verde del registro complementa la evidencia del resultado de una operación. | `principio-01-visibilidad-estado.png` | Completada |
+| 2 | Prevención de errores | El formulario impide continuar sin título y presenta un mensaje específico junto al campo. | `principio-02-prevencion-errores.png` | Completada |
+| 3 | Coincidencia entre el sistema y el mundo real | Las estrellas y las acciones de compartir, editar, eliminar y archivar utilizan conceptos reconocibles. | `principio-03-mundo-real.png` | Completada |
+| 4 | Control y libertad del usuario | La edición ofrece una salida mediante **Cancelar**; la pestaña de archivadas permite recuperar una reseña con **Desarchivar**. | `principio-04-control-libertad.png` | Completada |
+| 5 | Consistencia y estándares | La navegación, los formularios y las acciones conservan la misma paleta oscura, tipografía y jerarquía visual en las pantallas revisadas. | `principio-05-consistencia.png` | Completada |
+| 6 | Diseño estético y minimalista | El panel organiza las reseñas en tarjetas separadas, con jerarquía clara y sin decoración innecesaria. | `principio-06-diseno-minimalista.png` | Completada |
 
-## Criterios de aceptación
+## 1. Visibilidad del estado del sistema
 
-Cada captura debe cumplir lo siguiente:
+El botón primario permite reconocer el punto en el que se ejecuta la creación de la reseña. Como evidencia complementaria, el registro muestra un mensaje verde que comunica que la solicitud fue enviada correctamente.
 
-- Mostrar claramente la acción o estado que se desea evidenciar.
-- Evitar datos personales reales; utilizar cuentas y reseñas de prueba.
-- No mostrar contraseñas, tokens, variables de entorno ni credenciales.
-- Mantener un tamaño legible y sin recortes importantes.
-- Ocultar elementos externos que no pertenezcan a CineCraft.
-- Corresponder a una versión integrada en `develop`.
-- Guardarse en formato PNG.
+![Acción principal para crear una reseña](img/principio-01-visibilidad-estado.png)
 
-## Datos de prueba recomendados
+![Confirmación visible después de enviar una solicitud de registro](img/manual-registro.png)
 
-Para que las pantallas sean comprensibles se recomienda preparar:
+## 2. Prevención de errores
 
-- Un administrador.
-- Dos usuarios aprobados.
-- Una solicitud pendiente.
-- Una solicitud rechazada con motivo.
-- Tres o más reseñas con distintas calificaciones y etiquetas.
-- Una reseña destacada.
-- Una reseña archivada.
-- Una reseña compartida entre los usuarios de prueba.
+Antes de enviar información incompleta, el formulario identifica el campo requerido y explica el problema al usuario.
 
-No se deben reutilizar contraseñas personales en estas cuentas.
+![Validación cuando falta el título de la película](img/principio-02-prevencion-errores.png)
 
-## Procedimiento de captura
+La confirmación de eliminación agrega una segunda barrera antes de una acción permanente.
 
-1. Actualizar `develop` y ejecutar backend y frontend.
-2. Confirmar que la base de datos contiene únicamente datos de prueba aptos para mostrarse.
-3. Ajustar el navegador a un tamaño consistente, preferentemente `1440 × 900`.
-4. Abrir la pantalla indicada en la matriz.
-5. Ejecutar la acción necesaria y tomar la captura cuando el estado sea visible.
-6. Recortar únicamente el borde externo del navegador, sin ocultar contexto de la aplicación.
-7. Guardar el PNG con el nombre indicado en `docs/img/uiux/`.
-8. Cambiar el estado correspondiente de `Pendiente` a `Completada`.
-9. Insertar la imagen debajo de su evidencia utilizando una ruta relativa.
+![Confirmación antes de eliminar una reseña](img/manual-eliminar-resena.png)
 
-Ejemplo:
+## 3. Coincidencia entre el sistema y el mundo real
 
-```md
-![Confirmación antes de eliminar una reseña](img/uiux/04-prevencion-eliminar.png)
-```
+La calificación con estrellas y los nombres de acciones como **Eliminar** y **Archivar** corresponden con conceptos familiares para el usuario.
 
-## Revisión antes del cierre
+![Estrellas y acciones reconocibles en las tarjetas](img/principio-03-mundo-real.png)
 
-Antes de integrar esta feature en `develop` se debe comprobar:
+## 4. Control y libertad del usuario
 
-- [ ] Existen los diez archivos definidos en la matriz.
-- [ ] Todas las imágenes abren correctamente desde Markdown.
-- [ ] Ninguna captura contiene información sensible.
-- [ ] Cada principio posee al menos una evidencia clara.
-- [ ] Los estados de la matriz aparecen como `Completada`.
-- [ ] El Manual de Usuario coincide con las pantallas capturadas.
-- [ ] La feature fue actualizada con el `develop` más reciente.
+El formulario de edición incluye **Cancelar** para abandonar los cambios. Además, el archivado es reversible mediante la acción **Desarchivar**.
 
-La rama no debe integrarse mientras esta lista tenga elementos pendientes.
+![Controles disponibles durante la edición](img/principio-04-control-libertad.png)
+
+![Acción para desarchivar una reseña](img/manual-archivar.png)
+
+## 5. Consistencia y estándares
+
+La pantalla de perfil mantiene la misma navegación, colores, controles y estilos tipográficos usados en el formulario de reseñas y las demás vistas del sistema.
+
+![Consistencia visual en la pantalla de perfil](img/principio-05-consistencia.png)
+
+![Consistencia visual en el formulario de reseñas](img/manual-crear-resena.png)
+
+## 6. Diseño estético y minimalista
+
+Las reseñas se presentan con una estructura repetible, suficiente separación y contenido breve que facilita recorrer el panel.
+
+![Panel de reseñas organizado mediante tarjetas](img/principio-06-diseno-minimalista.png)
+
+## Revisión de cierre
+
+- [x] Las seis evidencias principales existen y abren correctamente.
+- [x] Cada principio posee al menos una captura identificable.
+- [x] Las capturas complementarias refuerzan los estados o acciones que requieren más de una vista.
+- [x] No se muestran contraseñas, tokens, variables de entorno ni credenciales.
+- [x] Los archivos están en formato PNG y utilizan rutas relativas válidas.
+- [x] El Manual de Usuario contiene las capturas de sus funciones principales.
+
+La evidencia queda lista para revisión e integración desde la rama `feature/uiux-evidence_202308204`.
