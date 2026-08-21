@@ -14,7 +14,7 @@ De los 10 principios heurísticos de Jakob Nielsen, el equipo seleccionó los si
 - Spinner o texto "Cargando..." al dar clic en "Iniciar sesión" o "Guardar reseña"
 - Confirmación visual (toast o mensaje) tras destacar, archivar o compartir una reseña
 
-**Evidencia de aplicación:** *(pendiente — agregar captura cuando el login y el guardado de reseñas estén implementados)*
+**Evidencia de aplicación:** seguimiento y archivos requeridos en [`evidencias-uiux.md`](evidencias-uiux.md).
 
 ### 2. Prevención de errores
 
@@ -25,7 +25,7 @@ De los 10 principios heurísticos de Jakob Nielsen, el equipo seleccionó los si
 - Modal de confirmación antes de eliminar una reseña
 - Confirmación también antes de archivar (acción reversible, pero saca la reseña de la vista principal)
 
-**Evidencia de aplicación:** *(pendiente — agregar captura del formulario con el botón deshabilitado y del modal de confirmación)*
+**Evidencia de aplicación:** seguimiento y archivos requeridos en [`evidencias-uiux.md`](evidencias-uiux.md).
 
 ### 3. Coincidencia entre el sistema y el mundo real
 
@@ -36,7 +36,7 @@ De los 10 principios heurísticos de Jakob Nielsen, el equipo seleccionó los si
 - Ícono de basurero para eliminar
 - Ícono de archivador/caja para `archivada`
 
-**Evidencia de aplicación:** *(pendiente — agregar captura del formulario de reseña y del dashboard con los íconos)*
+**Evidencia de aplicación:** seguimiento y archivos requeridos en [`evidencias-uiux.md`](evidencias-uiux.md).
 
 ### 4. Control y libertad del usuario
 
@@ -46,7 +46,7 @@ De los 10 principios heurísticos de Jakob Nielsen, el equipo seleccionó los si
 - Botón gris "Cancelar" junto a cada botón principal de acción en los formularios
 - `destacada` y `archivada` se pueden desmarcar/desarchivar en cualquier momento, no son decisiones permanentes
 
-**Evidencia de aplicación:** *(pendiente — agregar captura de un formulario con el botón "Cancelar" visible)*
+**Evidencia de aplicación:** seguimiento y archivos requeridos en [`evidencias-uiux.md`](evidencias-uiux.md).
 
 ### 5. Consistencia y estándares
 
@@ -64,7 +64,7 @@ De los 10 principios heurísticos de Jakob Nielsen, el equipo seleccionó los si
 - Los 3 colores de la tabla se usan exactamente igual en todas las pantallas del sistema, sin variaciones
 - Misma iconografía (principio 3) en todas las vistas donde aparezca la misma acción
 
-**Evidencia de aplicación:** *(pendiente — agregar captura de dos pantallas distintas mostrando la misma paleta)*
+**Evidencia de aplicación:** seguimiento y archivos requeridos en [`evidencias-uiux.md`](evidencias-uiux.md).
 
 ### 6. Diseño estético y minimalista
 
@@ -75,5 +75,5 @@ De los 10 principios heurísticos de Jakob Nielsen, el equipo seleccionó los si
 - Cada tarjeta muestra solo lo esencial (título, calificación, etiqueta); el comentario completo se ve al entrar al detalle
 - Sin elementos decorativos que no aporten información
 
-**Evidencia de aplicación:** *(pendiente — agregar captura del dashboard principal)*
+**Evidencia de aplicación:** seguimiento y archivos requeridos en [`evidencias-uiux.md`](evidencias-uiux.md).
 

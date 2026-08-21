@@ -20,6 +20,8 @@ La aplicación mostrará un mensaje confirmando que la solicitud fue enviada. No
 
 El correo debe ser único. Si ya existe una cuenta con el mismo correo, la aplicación mostrará un mensaje de error.
 
+![Solicitud de registro enviada correctamente](img/manual-registro.png)
+
 ## 3. Iniciar sesión
 
 1. Seleccionar **Iniciar Sesión**.
@@ -32,6 +34,8 @@ Posibles resultados:
 - **Solicitud pendiente:** se informa que todavía debe ser revisada.
 - **Solicitud rechazada:** se muestra el motivo registrado por el administrador.
 - **Credenciales incorrectas:** se solicita verificar el correo y la contraseña.
+
+![Formulario de inicio de sesión](img/manual-login.png)
 
 ## 4. Cerrar sesión
 
@@ -47,6 +51,8 @@ Presionar **Cerrar Sesión** en la barra superior. El token y los datos locales 
 
 El correo se muestra únicamente como referencia y no puede editarse desde esta pantalla.
 
+![Pantalla para administrar el perfil](img/manual-perfil.png)
+
 ## 6. Crear una reseña
 
 1. Seleccionar **Mis Reseñas**.
@@ -58,6 +64,8 @@ El correo se muestra únicamente como referencia y no puede editarse desde esta 
 7. Presionar **Crear Reseña**.
 
 El título y la etiqueta son obligatorios. Durante el guardado, el botón muestra el estado **Guardando...**.
+
+![Formulario para crear una reseña](img/manual-crear-resena.png)
 
 ## 7. Editar una reseña
 
@@ -77,6 +85,8 @@ Solo el propietario puede editar su reseña.
 
 La eliminación es permanente. Presionar **Cancelar** para conservar la reseña.
 
+![Confirmación antes de eliminar una reseña](img/manual-eliminar-resena.png)
+
 ## 9. Destacar una reseña
 
 Presionar la estrella ubicada en la tarjeta:
@@ -85,6 +95,8 @@ Presionar la estrella ubicada en la tarjeta:
 - `★` quita la reseña de destacadas.
 
 Las reseñas destacadas aparecen primero en la sección correspondiente del panel principal.
+
+![Reseña marcada como destacada](img/manual-destacar.png)
 
 ## 10. Archivar y restaurar una reseña
 
@@ -95,6 +107,8 @@ Para archivar:
 3. Confirmar la acción.
 
 La reseña se mueve de la vista principal a la pestaña **Archivadas**. Para recuperarla, abrir esa pestaña y presionar **Desarchivar**.
+
+![Pestaña de reseñas archivadas y acción para desarchivar](img/manual-archivar.png)
 
 ## 11. Compartir una reseña
 
@@ -116,9 +130,13 @@ Seleccionar **Compartidos Conmigo** en la barra superior. Cada tarjeta indica:
 
 Si todavía no se ha recibido ninguna reseña, la aplicación mostrará un estado vacío.
 
+![Reseñas recibidas de otros usuarios](img/manual-compartidos-conmigo.png)
+
 ## 13. Consultar reseñas enviadas
 
 Seleccionar **Mis Compartidas**. La tabla muestra el historial de reseñas enviadas, el destinatario y la fecha en que se compartió cada una.
+
+![Historial de reseñas compartidas](img/manual-mis-compartidas.png)
 
 ## 14. Funciones del administrador
 
@@ -132,6 +150,12 @@ Los accesos administrativos solamente aparecen cuando la sesión tiene el rol `a
 
 Al aceptar se solicita una confirmación. Al rechazar se puede escribir un motivo y luego confirmar la acción. CineCraft intenta enviar al usuario una notificación por correo.
 
+![Panel administrativo de solicitudes pendientes](img/manual-admin-solicitudes-pendientes.png)
+
+Cuando el entorno local utiliza Mailtrap, las notificaciones de aprobación y rechazo se reciben en la bandeja de prueba configurada por cada integrante.
+
+![Notificaciones administrativas recibidas en Mailtrap](img/manual-admin-mailtrap.png)
+
 ### 14.2 Historial de solicitudes
 
 Seleccionar **Historial** para consultar las solicitudes resueltas. La tabla muestra:
@@ -142,6 +166,8 @@ Seleccionar **Historial** para consultar las solicitudes resueltas. La tabla mue
 - Estado aprobado o rechazado.
 - Motivo del rechazo, cuando corresponda.
 
+![Historial de solicitudes resueltas](img/manual-admin-historial.png)
+
 ### 14.3 Reportes Top 5
 
 Seleccionar **Reportes Top 5**. Se muestran dos clasificaciones:
@@ -150,6 +176,8 @@ Seleccionar **Reportes Top 5**. Se muestran dos clasificaciones:
 2. Los cinco usuarios aprobados que más reseñas han compartido.
 
 Cada clasificación muestra la posición, el nombre, el correo y la cantidad acumulada. Si todavía no existe actividad, se presenta un mensaje informativo.
+
+![Reportes Top 5 de actividad](img/manual-admin-reporteTop5.png)
 
 ## 15. Mensajes y estados visuales
 
