@@ -37,6 +37,8 @@ Posibles resultados:
 
 Presionar **Cerrar Sesión** en la barra superior. El token y los datos locales de la sesión serán eliminados y se mostrará nuevamente el inicio de sesión.
 
+![Pantalla de inicio de sesión después de cerrar la sesión](img/manual-cerrarSesion.png)
+
 ## 5. Administrar el perfil
 
 1. Iniciar sesión.
@@ -68,6 +70,8 @@ El título y la etiqueta son obligatorios. Durante el guardado, el botón muestr
 5. Para salir sin guardar, presionar **Cancelar**.
 
 Solo el propietario puede editar su reseña.
+
+![Formulario para editar una reseña](img/manual-editar.png)
 
 ## 8. Eliminar una reseña
 
@@ -104,6 +108,8 @@ La reseña se mueve de la vista principal a la pestaña **Archivadas**. Para rec
 4. Presionar **Compartir** en la ventana de confirmación.
 
 No es posible compartir una reseña con la misma cuenta ni enviarla más de una vez al mismo destinatario.
+
+![Selección del destinatario para compartir una reseña](img/manual-compartir.png)
 
 ## 12. Consultar reseñas recibidas
 
