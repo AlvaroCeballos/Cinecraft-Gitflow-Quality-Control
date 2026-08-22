@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReviewCard from '../components/reviewCard';
 import ReviewForm from '../components/reviewForm';
@@ -27,6 +27,8 @@ export default function Reviews() {
   useEffect(() => {
     loadReviews();
     loadTags();
+    // La carga inicial se ejecuta una sola vez; las recargas posteriores son explícitas.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadReviews = async () => {

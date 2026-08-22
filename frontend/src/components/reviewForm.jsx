@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { getAllTags } from '../services/reviewService';
+import { useState, useEffect } from 'react';
 
 export default function ReviewForm({ initialData, tags, onSubmit, onCancel, isLoading }) {
   const [formData, setFormData] = useState({

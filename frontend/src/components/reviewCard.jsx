@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function ReviewCard({ review, onEdit, onDelete, onShare, onToggleFeatured, onToggleArchived }) {
   const renderStars = (rating) => {
     return (
