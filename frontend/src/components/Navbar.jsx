@@ -16,11 +16,35 @@ export default function Navbar() {
       <Link to="/" className="text-xl font-bold text-indigo-400 flex items-center gap-2">
         🎬 CineCraft
       </Link>
-      <div className="flex items-center gap-4 text-sm">
+      <div className="flex items-center gap-5 text-sm">
         {token ? (
           <>
-            <span className="text-slate-300">Hola, <strong className="text-white">{user.nombre}</strong></span>
-            <Link to="/profile" className="text-slate-300 hover:text-white transition-colors">Mi Perfil</Link>
+            <Link to="/reviews" className="text-slate-300 hover:text-white transition-colors">
+              Mis Reseñas
+            </Link>
+            <Link to="/shared-with-me" className="text-slate-300 hover:text-white transition-colors flex items-center gap-1">
+              📬 Compartidos Conmigo
+            </Link>
+            <Link to="/shared-by-me" className="text-slate-300 hover:text-white transition-colors flex items-center gap-1">
+              📤 Mis Compartidas
+            </Link>
+            {user.rol === 'administrador' && (
+              <>
+                <Link to="/admin/requests" className="text-amber-400 hover:text-amber-300 font-medium transition-colors">
+                  Solicitudes pendientes
+                </Link>
+                <Link to="/admin/requests/history" className="text-amber-400 hover:text-amber-300 font-medium transition-colors">
+                  Historial
+                </Link>
+                <Link to="/admin/reports" className="text-amber-400 hover:text-amber-300 font-medium transition-colors">
+                  Reportes Top 5
+                </Link>
+              </>
+            )}
+            <span className="text-slate-400">|</span>
+            <Link to="/profile" className="text-slate-300 hover:text-white transition-colors">
+              Mi Perfil ({user.nombre})
+            </Link>
             <button 
               onClick={handleLogout} 
               className="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded transition-colors"

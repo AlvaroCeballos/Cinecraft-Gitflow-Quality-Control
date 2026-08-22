@@ -1,0 +1,89 @@
+export default function ReviewCard({ review, onEdit, onDelete, onShare, onToggleFeatured, onToggleArchived }) {
+  const renderStars = (rating) => {
+    return (
+      <div className="flex gap-1">
+        {[...Array(5)].map((_, i) => (
+          <span key={i} className={i < rating ? 'text-yellow-400 text-lg' : 'text-slate-600 text-lg'}>
+            ★
+          </span>
+        ))}
+      </div>
+    );
+  };
+
+  return (
+    <div className={`bg-slate-800 border rounded-lg p-5 hover:border-slate-600 transition flex flex-col justify-between ${review.destacada ? 'border-yellow-500/60' : 'border-slate-700'}`}>
+      <div>
+        {/* Encabezado */}
+        <div className="flex justify-between items-start mb-3">
+          <div>
+            <h3 className="text-xl font-bold text-slate-100">{review.titulo_pelicula}</h3>
+            {review.etiqueta_nombre && (
+              <span className="inline-block bg-slate-700 text-slate-200 text-xs px-2 py-1 rounded mt-2">
+                {review.etiqueta_nombre}
+              </span>
+            )}
+          </div>
+          <button
+            onClick={() => onToggleFeatured(review.id)}
+            title={review.destacada ? 'Quitar de destacadas' : 'Marcar como destacada'}
+            className={`text-2xl leading-none transition ${review.destacada ? 'text-yellow-400' : 'text-slate-600 hover:text-yellow-400'}`}
+          >
+            {review.destacada ? '★' : '☆'}
+          </button>
+        </div>
+
+        {/* Calificación */}
+        <div className="mb-3">
+          {renderStars(review.calificacion)}
+        </div>
+
+        {/* Comentario */}
+        {review.comentario && (
+          <p className="text-slate-300 mb-4 text-sm leading-relaxed">
+            {review.comentario}
+          </p>
+        )}
+
+        {/* Fecha */}
+        <p className="text-slate-500 text-xs mb-4">
+          {new Date(review.fecha_creacion).toLocaleDateString('es-ES', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </p>
+      </div>
+
+      {/* Botones */}
+      <div className="flex gap-2 pt-2 border-t border-slate-700/60">
+        <button
+          onClick={() => onShare(review)}
+          className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded text-xs font-medium transition flex items-center gap-1"
+          title="Compartir con otro usuario"
+        >
+          🔗 Compartir
+        </button>
+        <button
+          onClick={() => onEdit(review)}
+          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-1.5 rounded text-xs font-medium transition"
+        >
+          Editar
+        </button>
+        <button
+          onClick={() => onDelete(review.id)}
+          className="flex-1 bg-red-600 hover:bg-red-700 text-white py-1.5 rounded text-xs font-medium transition"
+        >
+          Eliminar
+        </button>
+        <button
+          onClick={() => onToggleArchived(review.id)}
+          className="bg-slate-700 hover:bg-slate-600 text-slate-100 px-3 py-1.5 rounded text-xs font-medium transition"
+          title={review.archivada ? 'Restaurar al dashboard principal' : 'Archivar reseña'}
+        >
+          {review.archivada ? '📤 Desarchivar' : '🗄️ Archivar'}
+        </button>
+      </div>
+    </div>
+  );
+}
