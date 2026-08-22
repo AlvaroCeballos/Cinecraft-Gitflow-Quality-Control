@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { getPendingRequests, acceptRequest, rejectRequest } from '../services/adminRequestsService';
 
 const AdminRequests = () => {
@@ -15,7 +15,7 @@ const AdminRequests = () => {
       setLoading(true);
       const data = await getPendingRequests();
       setRequests(data);
-    } catch (err) {
+    } catch {
       setError('Error al cargar las solicitudes pendientes.');
     } finally {
       setLoading(false);
@@ -28,7 +28,7 @@ const AdminRequests = () => {
         await acceptRequest(id);
         alert('Usuario aprobado y notificado por correo.');
         fetchRequests(); // Recargar lista
-      } catch (err) {
+      } catch {
         alert('Hubo un error al aprobar la solicitud.');
       }
     }
@@ -44,7 +44,7 @@ const AdminRequests = () => {
         await rejectRequest(id, motivo);
         alert('Usuario rechazado y notificado por correo.');
         fetchRequests(); // Recargar lista
-      } catch (err) {
+      } catch {
         alert('Hubo un error al rechazar la solicitud.');
       }
     }

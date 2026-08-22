@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function DeleteConfirmationModal({ isOpen, reviewTitle, onConfirm, onCancel, isLoading }) {
   if (!isOpen) return null;
 

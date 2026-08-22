@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as shareService from '../services/shareService';
 
 export default function ShareModal({ isOpen, review, onClose, onSuccess }) {

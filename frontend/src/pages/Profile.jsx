@@ -15,7 +15,7 @@ export default function Profile() {
         const response = await API.get('/auth/profile');
         setNombre(response.data.nombre);
         setCorreo(response.data.correo);
-      } catch (err) {
+      } catch {
         setError('Error al cargar datos del perfil.');
       }
     };
